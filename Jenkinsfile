@@ -13,7 +13,7 @@ pipeline {
     }
     stage('test') {
       steps {
-        withDockerContainer("python3.7") {
+        withDockerContainer("python:3.7") {
           sh 'python3 test.py'
         }
       }
