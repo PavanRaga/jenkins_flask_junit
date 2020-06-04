@@ -40,7 +40,7 @@ pipeline {
     }
   
     stage('deploy to staging k8s') {
-      when{ branch 'master' }
+      when { branch 'master' }
       steps {
         withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
           // some block
@@ -50,7 +50,7 @@ pipeline {
     }
 
     stage('deploy to prod k8s') {
-      when branch 'master'
+      when { branch 'master'}
       steps {
         withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
           // some block
