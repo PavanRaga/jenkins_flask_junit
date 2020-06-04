@@ -3,7 +3,7 @@ pipeline {
   environment {
     BUILDNUM = getBuildNum()
     DOCKER_REPO = "pavanraga"
-    IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app-$BRANCH_NAME:$BUILDNUM"
+    IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app-${env.BRANCH_NAME}:$BUILDNUM"
     KUBECONFIG = "${env.BRANCH_NAME == "master" ? credentials("NEW-staging-kubeconfig") : credentials("staging-kubeconfig	")}"
   }
   stages {
