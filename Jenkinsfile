@@ -4,7 +4,7 @@ pipeline {
     BUILDNUM = getBuildNum()
     DOCKER_REPO = "pavanraga"
     IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app-${env.BRANCH_NAME}:$BUILDNUM"
-    KUBECONFIG = env.BRANCH_NAME == "master" ? credentials('NEW-staging-kubeconfig') : credentials('staging-kubeconfig')
+    KUBECONFIG = credentials(getKubeConfig(env.BRANCH_NAME))
   }
   stages {
     stage('build docker image') {
@@ -44,4 +44,13 @@ pipeline {
 def getBuildNum() {
   def tag = sh script: 'git rev-parse HEAD', returnStdout: true
   return tag
+}
+
+def getKubeConfig(branchname) {
+  if("master".equals(branchname)) {
+    return 'NEW-staging-kubeconfig')
+  }
+  else {
+    'staging-kubeconfig'
+  }
 }
