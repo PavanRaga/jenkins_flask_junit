@@ -16,6 +16,7 @@ pipeline {
       agent {
         docker {
           image "$IMAGE_URL_WITH_TAG"
+          reuseNode true
         }
       }
       steps {
