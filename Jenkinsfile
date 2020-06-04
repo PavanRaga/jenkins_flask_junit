@@ -11,18 +11,18 @@ pipeline {
         sh "docker build . -t $IMAGE_URL_WITH_TAG"
       }
     }
-    stage('test') {
-      steps {
-        withDockerContainer("$IMAGE_URL_WITH_TAG") {
-          sh 'python3 test.py'
-        }
-      }
-    }
     stage('push the image'){
       steps {
         withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhubPwd')]) {
           sh "docker login -u pavanraga -p $dockerhubPwd"
           sh "docker push $IMAGE_URL_WITH_TAG"
+        }
+      }
+    }
+    stage('test') {
+      steps {
+        withDockerContainer("$IMAGE_URL_WITH_TAG") {
+          sh 'python3 test.py'
         }
       }
     }
