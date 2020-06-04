@@ -4,7 +4,7 @@ pipeline {
     BUILDNUM = getBuildNum()
     DOCKER_REPO = "pavanraga"
     IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app-${env.BRANCH_NAME}:$BUILDNUM"
-    KUBECONFIG = credentials(getKubeConfig(env.BRANCH_NAME))
+    // KUBECONFIG = credentials(getKubeConfig(env.BRANCH_NAME))
   }
   stages {
     stage('build docker image') {
@@ -37,6 +37,26 @@ pipeline {
           sh "echo $KUBECONFIG"
         }
       }
+    stage('deploy to staging k8s'){
+      when{ branch 'master' }
+      steps {
+        withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
+          // some block
+          sh "echo $staging"
+        }
+      }
+    }
+
+    stage('deploy to prod k8s'){
+      when branch 'master'
+      steps {
+        withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
+          // some block
+          sh "echo $staging"
+        }
+      }
+    }
+
     }
   }
 }
