@@ -48,7 +48,7 @@ def getBuildNum() {
 
 def getKubeConfig(branchname) {
   if("master".equals(branchname)) {
-    return 'NEW-staging-kubeconfig')
+    return 'NEW-staging-kubeconfig'
   }
   else {
     'staging-kubeconfig'
