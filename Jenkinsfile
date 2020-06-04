@@ -13,7 +13,9 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'python3 test.py'
+        withDockerContainer('dockermy') {
+          sh 'python3 test.py'
+        }
       }
     }
     stage('push the image'){
