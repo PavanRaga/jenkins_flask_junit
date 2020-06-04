@@ -51,6 +51,6 @@ def getKubeConfig(branchname) {
     return 'NEW-staging-kubeconfig'
   }
   else {
-    'staging-kubeconfig'
+    return 'staging-kubeconfig'
   }
 }
