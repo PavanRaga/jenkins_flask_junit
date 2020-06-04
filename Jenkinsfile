@@ -34,7 +34,7 @@ pipeline {
         withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhubPwd')]) {
           sh "docker login -u pavanraga -p $dockerhubPwd"
           sh "docker push $IMAGE_URL_WITH_TAG"
-          sh "echo $KUBECONFIG"
+          // sh "echo $KUBECONFIG"
         }
       }
     }
