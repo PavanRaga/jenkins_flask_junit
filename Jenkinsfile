@@ -1,15 +1,25 @@
 pipeline {
-  agent { docker { image 'python:3.7.2' } }
+  agent any
+  environment {
+    BUILDNUM = getBuildNum()
+    DOCKER_REPO = "pavanraga"
+    IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app:$BUILDNUM"
+  }
   stages {
-    stage('build') {
+    stage('build docker image') {
       steps {
-        sh 'pip install -r requirements.txt'
+        sh "docker build . -t $IMAGE_URL_WITH_TAG"
       }
     }
-    stage('test') {
-      steps {
-        sh 'python test.py'
-      }   
-    }
+    // stage('test') {
+    //   steps {
+    //     sh 'python test.py'
+    //   }
+    // }
   }
+}
+
+def getBuildNum() {
+  def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+  return tag
 }
