@@ -37,6 +37,7 @@ pipeline {
           sh "echo $KUBECONFIG"
         }
       }
+    }
     stage('deploy to staging k8s'){
       when{ branch 'master' }
       steps {
@@ -55,8 +56,6 @@ pipeline {
           sh "echo $staging"
         }
       }
-    }
-
     }
   }
 }
