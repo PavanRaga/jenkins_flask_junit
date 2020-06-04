@@ -29,7 +29,7 @@ pipeline {
     //   }
     // }
 
-    stage('push the image'){
+    stage('push the image') {
       steps {
         withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhubPwd')]) {
           sh "docker login -u pavanraga -p $dockerhubPwd"
@@ -38,7 +38,8 @@ pipeline {
         }
       }
     }
-    stage('deploy to staging k8s'){
+  
+    stage('deploy to staging k8s') {
       when{ branch 'master' }
       steps {
         withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
@@ -48,7 +49,7 @@ pipeline {
       }
     }
 
-    stage('deploy to prod k8s'){
+    stage('deploy to prod k8s') {
       when branch 'master'
       steps {
         withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
