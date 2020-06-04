@@ -3,7 +3,8 @@ pipeline {
   environment {
     BUILDNUM = getBuildNum()
     DOCKER_REPO = "pavanraga"
-    IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app:$BUILDNUM"
+    IMAGE_URL_WITH_TAG = "$DOCKER_REPO/app-$BRANCH_NAME:$BUILDNUM"
+    KUBECONFIG = "${env.BRANCH_NAME == "master" ? credentials("NEW-staging-kubeconfig") : credentials("staging-kubeconfig	")}"
   }
   stages {
     stage('build docker image') {
@@ -33,6 +34,7 @@ pipeline {
         withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhubPwd')]) {
           sh "docker login -u pavanraga -p $dockerhubPwd"
           sh "docker push $IMAGE_URL_WITH_TAG"
+          sh "echo $KUBECONFIG"
         }
       }
     }
