@@ -11,11 +11,19 @@ pipeline {
         sh "docker build . -t $IMAGE_URL_WITH_TAG"
       }
     }
-    // stage('test') {
-    //   steps {
-    //     sh 'python test.py'
-    //   }
-    // }
+    stage('test') {
+      steps {
+        sh 'python test.py'
+      }
+    }
+    stage('push the image'){
+      steps {
+        withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhubPwd')]) {
+          sh "docker login -u pavanraga -p $dockerhubPwd"
+          sh "docker push $IMAGE_URL_WITH_TAG"
+        }
+      }
+    }
   }
 }
 
