@@ -13,7 +13,7 @@ pipeline {
     }
     stage('test') {
       steps {
-        withDockerContainer("python:3.7") {
+        withDockerContainer('$IMAGE_URL_WITH_TAG') {
           sh 'python3 test.py'
         }
       }
