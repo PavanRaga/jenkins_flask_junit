@@ -13,21 +13,21 @@ pipeline {
       }
     }
 
-    stage('test') {
-      agent {
-        docker {
-          image "$IMAGE_URL_WITH_TAG"
-          reuseNode true
-        }
-      }
-      steps {
-        // withDockerContainer("$IMAGE_URL_WITH_TAG") {
-        //   sh 'python3 test.py'
-        // }
-        // sh 'pip install flask'
-        sh 'python test.py'
-      }
-    }
+    // stage('test') {
+    //   agent {
+    //     docker {
+    //       image "$IMAGE_URL_WITH_TAG"
+    //       reuseNode true
+    //     }
+    //   }
+    //   steps {
+    //     // withDockerContainer("$IMAGE_URL_WITH_TAG") {
+    //     //   sh 'python3 test.py'
+    //     // }
+    //     // sh 'pip install flask'
+    //     sh 'python test.py'
+    //   }
+    // }
 
     stage('push the image'){
       steps {
