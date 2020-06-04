@@ -13,11 +13,16 @@ pipeline {
     }
 
     stage('test') {
+      agent {
+        docker {
+          image "$IMAGE_URL_WITH_TAG"
+        }
+      }
       steps {
         // withDockerContainer("$IMAGE_URL_WITH_TAG") {
         //   sh 'python3 test.py'
         // }
-        sh 'pip install flask'
+        // sh 'pip install flask'
         sh 'python test.py'
       }
     }
