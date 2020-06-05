@@ -43,8 +43,10 @@ pipeline {
       when { branch 'master' }
       steps {
         withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
-          // some block
-          sh "echo $staging"
+          // replace the image name in yamls
+          sh "find . -name *.yaml -name *.yml -exec sed -i 's/tagVersion/$BUILDNUM/g' {} +"
+          // deploy the yamls
+          sh "kubectl apply -R ."
         }
       }
     }
@@ -53,8 +55,10 @@ pipeline {
       when { branch 'master'}
       steps {
         withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
-          // some block
-          sh "echo $staging"
+          // replace the image name in yamls
+          sh "find . -name '*.y*l' -exec sed -i 's/tagVersion/$BUILDNUM/g' {} +"
+          // deploy the yamls
+          sh "kubectl apply -R ."
         }
       }
     }

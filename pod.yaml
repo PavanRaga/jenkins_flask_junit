@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  containers:
+    - name: app
+      image: pavanraga/app:tagVersion
+      ports:
+        - containerPort: 8080
