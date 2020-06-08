@@ -52,9 +52,11 @@ pipeline {
     }
 
     stage('deploy to prod k8s') {
-      when { branch 'master'}
+      when { branch 'release'}
       steps {
-        withCredentials([file(credentialsId: 'wallet', variable: 'staging')]) {
+        withCredentials([file(credentialsId: 'wallet', variable: 'release')]) {
+          // Update the kubeconfig for this cluster
+          sh 'aws eks update-kubeconfig --name release'
           // replace the image name in yamls
           sh "find . -name '*.y*l' -exec sed -i 's/tagVersion/$BUILDNUM/g' {} +"
           // deploy the yamls
